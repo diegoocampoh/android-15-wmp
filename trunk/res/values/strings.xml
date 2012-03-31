@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, FirstAPpActivity!</string>
+    <string name="app_name">WMP - Where\'s My Phone</string>
+    <string name="token">START</string>
+    <string name="stopToken">STOP</string>
+</resources>
