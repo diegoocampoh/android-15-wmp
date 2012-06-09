@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,9 +25,10 @@ import android.util.Log;
  */
 public class LocService extends Service {
 
+	public static final String PREFS_NAME = "WMPPrefsFile";
 	Location last = null;
 	SmsManager smsManager = SmsManager.getDefault();
-	String address = null;
+	String address,body = null;
 	LocationListener locationListener;
 	LocationListener networklocationListener;
 	
@@ -90,11 +92,12 @@ public class LocService extends Service {
 		// TODO Auto-generated method stub
 
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		Log.d("DEBUG_ACTIVITY", new Integer(intent.getExtras().size()).toString());
+		//Log.d("DEBUG_ACTIVITY", new Integer(intent.getExtras().size()).toString());
 
-		Log.d("DEBUG_ACTIVITY", intent.getExtras().getString("address"));
+		//Log.d("DEBUG_ACTIVITY", intent.getExtras().getString("address"));
 		address = intent.getExtras().getString("address");
-
+		body = intent.getExtras().getString("body");
+		
 
 		// Acquire a reference to the system Location Manager
 		
@@ -176,9 +179,12 @@ public class LocService extends Service {
 			}
 		};
 
+
+		
+		
 		// Register the listener with the Location Manager to receive location updates
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 5, locationListener);
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 5, networklocationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 10, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 10, networklocationListener);
 
 	}
 

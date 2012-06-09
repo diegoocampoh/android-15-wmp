@@ -1,6 +1,6 @@
 package uy.wmp.src;
 
-import src.main.R;
+
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -19,9 +19,9 @@ import android.preference.PreferenceManager;
 
 
 public class MainReceiver extends BroadcastReceiver {
-
+	public static final String PREFS_NAME = "WMPPrefsFile";
 	private static ComponentName cn = null;
-
+ 
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
@@ -42,54 +42,27 @@ public class MainReceiver extends BroadcastReceiver {
 
 				Bundle b = new Bundle();
 				b.putString("address", address.toString());
+				b.putString("body", body.toString());
 
 				nintent.putExtras(b);
 
 				Log.d("DEBUG_ACTIVITY", "Mensaje: "+body+" - De: "+address);
 
-
-				if (body.equals(context.getString(R.string.token))){
+				SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+				if (body.equals(settings.getString("startToken", "")) && !body.equals("")){
 					Log.d("DEBUG_ACTIVITY", "ARRANCANDO SERVICIO");
+					abortBroadcast();
 					cn = context.startService(nintent);
-					//eliminamos el mensaje
-					deleteMessage(context, sms);
-
-
 				}
-				if (body.equals(context.getString(R.string.stopToken))){
+				
+				if (body.equals(settings.getString("stopToken", "")) && !body.equals("")){
 					Log.d("DEBUG_ACTIVITY", "TERMINANDO SERVICIO");	            		
-					context.stopService(new Intent(context,LocService.class));
-					//eliminamos el mensaje
-					deleteMessage(context, sms);
-				}
-
+					context.stopService(nintent);	
 				
-
-				
+				}					
 			}
 		}
+		
 
 	}
-	
-	private int deleteMessage(Context context, SmsMessage msg) {
-		Log.d("DEBUG_ACTIVITY", "INTENTANDO ELIMINAR MENSAJE");	     
-	    Uri deleteUri = Uri.parse("content://sms");
-	    int count = 0;
-	    Cursor c = context.getContentResolver().query(deleteUri, null, null,
-	            null, null);
-	    while (c.moveToNext()) {
-	        try {
-	            // Delete the SMS
-	            String pid = c.getString(0); // Get id;
-	            String uri = "content://sms/" + pid;
-	            count = context.getContentResolver().delete(Uri.parse(uri),
-	                    null, null);
-	            abortBroadcast();
-	        } catch (Exception e) {
-	        	Log.d("DEBUG_ACTIVITY", "ERROR ELIMINANDO MENSAJE "+e.getMessage());	 
-	        }
-	    }
-	    return count;
-	}
-
 }

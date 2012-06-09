@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:weightSum="1">
-    <android.webkit.WebView android:id="@+id/webView1" android:layout_width="fill_parent" android:layout_height="fill_parent"></android.webkit.WebView>
+    android:orientation="vertical" android:layout_height="wrap_content" android:layout_width="fill_parent">
+<LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical">
+    <TextView android:text="Token inicio" android:layout_height="wrap_content" android:id="@+id/textView1" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content"></TextView>
+</LinearLayout>
+<LinearLayout android:id="@+id/linearLayout2" android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical">
+    <EditText android:id="@+id/editText_startToken" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <requestFocus></requestFocus>
+    </EditText>
+    <requestFocus></requestFocus>
+</LinearLayout>
+<TextView android:text="Token fin" android:layout_height="wrap_content" android:id="@+id/TextView01" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content"></TextView>
+<EditText android:id="@+id/editText_stopToken" android:layout_height="wrap_content" android:layout_width="fill_parent"></EditText>
+<TextView android:text=" " android:layout_height="wrap_content" android:id="@+id/TextView01" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content"></TextView>
+<Button android:text="Lista autorizados   >"  android:id="@+id/button1" android:layout_width="fill_parent" android:fadingEdge="horizontal|vertical" android:drawableLeft="@drawable/picklist" android:layout_height="wrap_content"></Button>
+<Button android:layout_height="wrap_content" android:id="@+id/button_guardar" android:layout_width="fill_parent" android:text="Guardar" android:drawableLeft="@drawable/save_32"></Button>
+<Button android:layout_height="wrap_content" android:layout_width="fill_parent" android:drawableLeft="@drawable/stop" android:text="Forzar cierre" android:id="@+id/button_stopService"></Button>
 </LinearLayout>
